@@ -4,12 +4,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const axios = require('axios');
 
-// Debug: Log environment variables at startup
-console.log('Environment variables loaded:');
-console.log('YOUTUBE_API_KEY:', config.YOUTUBE_API_KEY ? 'SET' : 'NOT SET');
-console.log('MONGODB_URI:', config.MONGODB_URI ? 'SET' : 'NOT SET');
-console.log('PORT:', config.PORT);
-
 const app = express();
 const PORT = config.PORT;
 
@@ -55,9 +49,6 @@ const logEvent = async (action, videoId, details = {}) => {
 app.get('/api/video/:videoId', async (req, res) => {
   try {
     const { videoId } = req.params;
-    
-    // Debug: Check if API key is loaded
-    console.log('API Key loaded:', config.YOUTUBE_API_KEY ? 'YES' : 'NO');
     
     if (!config.YOUTUBE_API_KEY) {
       return res.status(500).json({ error: 'YouTube API key not configured' });
@@ -179,6 +170,70 @@ app.delete('/api/notes/:id', async (req, res) => {
     res.json({ message: 'Note deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete note' });
+  }
+});
+
+// Comments management routes
+app.post('/api/comments/:videoId', async (req, res) => {
+  try {
+    const { videoId } = req.params;
+    const { text } = req.body;
+    
+    // Note: This requires OAuth2 authentication for actual posting
+    // For demo purposes, we'll simulate the comment creation
+    const simulatedComment = {
+      id: 'demo_' + Date.now(),
+      snippet: {
+        textDisplay: text,
+        authorDisplayName: 'Demo User',
+        publishedAt: new Date().toISOString()
+      }
+    };
+    
+    await logEvent('comment_added', videoId, { text });
+    res.json(simulatedComment);
+  } catch (error) {
+    console.error('Comment creation error:', error);
+    res.status(500).json({ error: 'Failed to add comment' });
+  }
+});
+
+app.delete('/api/comments/:videoId/:commentId', async (req, res) => {
+  try {
+    const { videoId, commentId } = req.params;
+    
+    // Note: This requires OAuth2 authentication for actual deletion
+    // For demo purposes, we'll simulate the deletion
+    await logEvent('comment_deleted', videoId, { commentId });
+    res.json({ message: 'Comment deleted successfully' });
+  } catch (error) {
+    console.error('Comment deletion error:', error);
+    res.status(500).json({ error: 'Failed to delete comment' });
+  }
+});
+
+// Video editing routes
+app.put('/api/video/:videoId', async (req, res) => {
+  try {
+    const { videoId } = req.params;
+    const { title, description } = req.body;
+    
+    // Note: This requires OAuth2 authentication for actual editing
+    // For demo purposes, we'll simulate the update
+    const updatedVideo = {
+      id: videoId,
+      snippet: {
+        title: title,
+        description: description,
+        updatedAt: new Date().toISOString()
+      }
+    };
+    
+    await logEvent('video_updated', videoId, { title, description });
+    res.json(updatedVideo);
+  } catch (error) {
+    console.error('Video update error:', error);
+    res.status(500).json({ error: 'Failed to update video' });
   }
 });
 
