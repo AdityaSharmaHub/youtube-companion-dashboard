@@ -2,21 +2,35 @@
 
 A mini-dashboard that connects to the YouTube API to help users manage their uploaded videos with detailed analytics and note-taking functionality.
 
-## Features
+## 🌐 Live Demo
+
+- **Frontend**: https://yt-comp-dash.vercel.app
+- **Backend API**: https://yt-comp-dash-server.onrender.com
+
+## ✅ Completed Features
 
 - ✅ Display video details via YouTube API
-- ✅ Notes management system with search/tagging
-- ✅ Event logging system
+- ✅ Notes management system (CRUD operations)
+- ✅ Search functionality with tags
+- ✅ Event logging system  
 - ✅ Responsive design
-- 🔄 Comment management (planned)
-- 🔄 Video editing capabilities (planned)
+- ✅ Deployed and live
+
+## 🚀 How to Use
+
+1. Visit the live demo URL above
+2. Enter a YouTube video ID (try: `dQw4w9WgXcQ`)
+3. Click "Load Video" to see video details
+4. Add notes with titles, content, and tags
+5. Use search to find specific notes
+6. Edit/delete notes as needed
 
 ## Tech Stack
 
 - **Frontend**: React + Vite
 - **Backend**: Express.js + MongoDB
 - **APIs**: YouTube Data API v3
-- **Deployment**: Vercel (Frontend) + Railway/Render (Backend)
+- **Deployment**: Vercel (Frontend) + Render (Backend)
 
 ## Quick Setup
 
@@ -45,7 +59,20 @@ PORT=5000
 VITE_API_BASE=http://localhost:5000/api
 ```
 
-### 3. Run Development
+### 3. Get YouTube API Key
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create new project → Enable YouTube Data API v3
+3. Create credentials → API Key
+4. Restrict to YouTube Data API v3
+
+### 4. Database Setup
+MongoDB Atlas (Recommended)
+1. Sign up at [MongoDB Atlas](https://www.mongodb.com/atlas)
+2. Create free cluster
+3. Get connection string
+
+
+### 5. Run Development
 ```bash
 # Backend (terminal 1)
 cd backend
